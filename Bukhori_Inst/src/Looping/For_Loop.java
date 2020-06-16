@@ -17,7 +17,7 @@ public class For_Loop {
 //
 //            aksi;
 //
-//        }
+////        }
 
 
         System.out.println("ini adalah awal program");
