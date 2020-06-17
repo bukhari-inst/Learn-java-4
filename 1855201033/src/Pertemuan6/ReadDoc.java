@@ -17,19 +17,16 @@ import org.apache.poi.hwpf.extractor.WordExtractor;
 public class ReadDoc {
     public static void main(String[] args) {
         
-        File fileku = new File("D://readDoc.doc");
+        File filenya = new File("D://readDoc.doc");
         WordExtractor extractor = null;
-        
-        try{
-        FileInputStream fis = new FileInputStream(fileku.getAbsolutePath());
-        HWPFDocument document = new HWPFDocument(fis);
-        extractor = new WordExtractor(document);
-        String filetext = extractor.getText();
-        System.out.println(filetext);
-        
-        }catch(Exception exep){
+        try {
+            FileInputStream fis = new FileInputStream(filenya.getAbsolutePath());
+            HWPFDocument document = new HWPFDocument(fis);
+            extractor = new WordExtractor(document);
+            String fileText = extractor.getText();
+            System.out.println(fileText);
+        } catch (Exception exep) {
             exep.printStackTrace();
         }
-        
     }
 }
