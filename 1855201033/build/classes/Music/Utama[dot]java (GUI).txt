@@ -1,0 +1,235 @@
+
+package player;
+import java.io.File;
+import java.io.*;
+import javax.swing.DefaultListModel;
+import java.util.ArrayList;
+import javax.swing.UIManager;
+/**
+ *
+ * @author ROTAN27
+ */
+public class Utama extends javax.swing.JFrame {
+    Playlist pl = new Playlist();
+    
+    ArrayList updateList = new ArrayList();
+    
+    javazoom.jl.player.Player player;
+    File simpan;
+    /**
+     * Creates new form Utama
+     */
+    public Utama() {
+        initComponents();
+    }
+
+    
+void updateList() {
+        updateList = pl.getListSong();
+        DefaultListModel model =  new DefaultListModel();
+        for (int i = 0; i < updateList.size(); i++) {
+            int j = i + 1;
+            model.add(i, j + " | " + ((File) updateList.get(i)).getName());
+        }
+        jPlaylist.setModel(model);
+
+    }
+
+//panel kontrol
+
+void add(){
+    pl.add(this);
+    updateList();
+}
+
+void remove(){
+    try{
+        int akandihapus = jPlaylist.getLeadSelectionIndex();
+        pl.ls.remove(akandihapus);
+        updateList();
+    }catch(Exception e){
+    }
+}
+
+void up(){
+    try{
+        int s1 = jPlaylist.getLeadSelectionIndex();
+        simpan = (File) pl.ls.get(s1);
+        pl.ls.remove(s1);
+        pl.ls.add(s1 - 1, simpan );
+        updateList();
+        jPlaylist.setSelectedIndex(s1-1);
+    }catch(Exception e){
+    }
+}
+
+void down(){
+    try{
+        int s1 = jPlaylist.getLeadSelectionIndex();
+        simpan = (File) pl.ls.get(s1);
+        pl.ls.remove(s1);
+        pl.ls.add(s1 + 1, simpan );
+        updateList();
+        jPlaylist.setSelectedIndex(s1+1);
+    }catch(Exception e){
+    }
+}
+
+void open(){
+    pl.openPls(this);
+    updateList();
+}
+
+void save(){
+    pl.saveAsPlaylist(this);
+    updateList();
+}
+
+File play1;
+static int a = 0;
+
+void putar(){
+    if(a==0){
+        try{
+            int p1 = jPlaylist.getSelectedIndex();
+            play1 = (File) this.updateList.get(p1);
+            FileInputStream fis = new FileInputStream(play1);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            player = new javazoom.jl.player.Player(bis);
+            a =1;
+        }catch(Exception e){
+            System.out.println("Problem playing file");
+            System.out.println(e);
+        }
+        
+        new Thread(){
+            @Override
+            public void run(){
+                try{
+                    player.play();
+                
+            }catch (Exception e){
+            }
+        }
+    }.start();
+    }else{
+        player.close();
+        a=0;
+        putar();
+    }
+}
+
+
+File sa;
+void next(){
+    if(a==0){
+        try{
+            int s1 = jPlaylist.getSelectedIndex() +1;
+            sa = (File) this.pl.ls.get(s1);
+            FileInputStream fis = new FileInputStream(sa);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            player = new javazoom.jl.player.Player(bis);
+            a =1;
+            jPlaylist.setSelectedIndex(s1);
+        }catch(Exception e){
+            System.out.println("Problem playing file");
+            System.out.println(e);
+        }
+        
+        new Thread(){
+            @Override
+            public void run(){
+                try{
+                    player.play();
+                
+            }catch (Exception e){
+            }
+        }
+    }.start();
+    }else{
+        player.close();
+        a=0;
+        next();
+    }
+
+}
+
+void previous(){
+    if(a==0){
+        try{
+            int s1 = jPlaylist.getSelectedIndex() -1;
+            sa = (File) this.pl.ls.get(s1);
+            FileInputStream fis = new FileInputStream(sa);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            player = new javazoom.jl.player.Player(bis);
+            a =1;
+            jPlaylist.setSelectedIndex(s1);
+        }catch(Exception e){
+            System.out.println("Problem playing file");
+            System.out.println(e);
+        }
+        
+        new Thread(){
+            @Override
+            public void run(){
+                try{
+                    player.play();
+                
+            }catch (Exception e){
+            }
+        }
+    }.start();
+    }else{
+        player.close();
+        a=0;
+        previous();
+    }
+}
+
+
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        add();// TODO add your handling code here:
+    }                                      
+
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        remove();// TODO add your handling code here:
+    }                                         
+
+    private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        putar();// TODO add your handling code here:
+    }                                       
+
+    private void btnPauseActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // TODO add your handling code here:
+    }                                        
+
+    private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        previous();// TODO add your handling code here:
+    }                                           
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        next();// TODO add your handling code here:
+    }                                       
+
+    private void btnUpActionPerformed(java.awt.event.ActionEvent evt) {                                      
+        up();// TODO add your handling code here:
+    }                                     
+
+    private void btnDownActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        down();// TODO add your handling code here:
+    }                                       
+
+    private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        open();// TODO add your handling code here:
+    }                                       
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        save();// TODO add your handling code here:
+    }                                       
+
+    private void btnStopActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        player.close();// TODO add your handling code here:
+    }                                       
+
+   
