@@ -24,6 +24,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class WAVPlayer extends javax.swing.JFrame {
 
     private static Clip musikk;
+    String name;
 
     /**
      * Creates new form WAVPlayer
@@ -180,6 +181,7 @@ public class WAVPlayer extends javax.swing.JFrame {
     private void stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopActionPerformed
         musikk.setMicrosecondPosition(PROPERTIES);
         musikk.stop();
+        Display.setText("");
     }//GEN-LAST:event_stopActionPerformed
 
     private void pauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseActionPerformed
@@ -192,6 +194,7 @@ public class WAVPlayer extends javax.swing.JFrame {
         musikk.setMicrosecondPosition(clipTimePosition);
         musikk.start();
         musikk.loop(Clip.LOOP_CONTINUOUSLY);
+        Display.setText(name);
     }//GEN-LAST:event_resumeActionPerformed
 
     private void openfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openfileActionPerformed
@@ -202,7 +205,7 @@ public class WAVPlayer extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File myFile = chooser.getSelectedFile();
             String song = myFile + "";
-            String name = chooser.getSelectedFile().getName();
+            name = chooser.getSelectedFile().getName();
             Display.setText(name);
             playMusic(song);
         }
