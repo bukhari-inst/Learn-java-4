@@ -5,7 +5,6 @@
  */
 package Pertemuan6;
 
-import TestPenasaran.*;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -289,7 +288,7 @@ public class TxtToDocToTxt1 extends javax.swing.JFrame {
                 java.io.File newTextFile1 = new java.io.File("D://thetextfile.txt");
                 try (FileWriter fw1 = new FileWriter(newTextFile1)) {
                     fw1.write(str);
-                    
+
                 }
             } else {
                 java.io.File newTextFile2 = new java.io.File("D://thetextfile.doc");
