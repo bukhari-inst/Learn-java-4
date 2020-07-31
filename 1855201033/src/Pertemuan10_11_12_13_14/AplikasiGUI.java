@@ -493,7 +493,10 @@ public class AplikasiGUI extends javax.swing.JFrame {
         in_nim.setText("");
         in_nama.setText("");
         in_alamat.setText("");
-        in_lakilaki.setSelected(false);
+        ButtonGroup bG = new ButtonGroup();
+        bG.add(in_lakilaki);
+        bG.add(in_perempuan);
+        bG.clearSelection();
     }//GEN-LAST:event_tombolResetActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
